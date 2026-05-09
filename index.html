@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="logo.png">
   <title>Nadtech</title>
   <style>
     body {
@@ -34,34 +35,235 @@
     }
   </style>
 </head>
-<!-- WhatsApp Floating Button -->
-<a href="https://wa.me/971559717150" 
-   class="whatsapp-float" 
-   target="_blank">
+<!-- Modern Floating Action Menu -->
+<div class="fam-container">
+  <!-- Main Primary Button -->
+  <button class="fam-primary" id="famPrimary" title="Contact Us">
+    <span class="fam-icon-plus">+</span>
+  </button>
 
-  💬
-</a>
+  <!-- Expandable Menu Items -->
+  <div class="fam-menu" id="famMenu">
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/971559717150" class="fam-item whatsapp-item" target="_blank" title="Chat on WhatsApp">
+      <span class="fam-item-icon">💬</span>
+      <span class="fam-item-label">WhatsApp</span>
+    </a>
+
+    <!-- Call Button -->
+    <a href="tel:+971559717150" class="fam-item call-item" title="Call Us">
+      <span class="fam-item-icon">📞</span>
+      <span class="fam-item-label">Call</span>
+    </a>
+  </div>
+
+  <!-- Overlay (closes menu when clicked) -->
+  <div class="fam-overlay" id="famOverlay"></div>
+</div>
 
 <style>
-.whatsapp-float {
+.fam-container {
   position: fixed;
-  width: 55px;
-  height: 55px;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
-  color: white;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.fam-primary {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  text-align: center;
+  border: none;
+  background: linear-gradient(135deg, #0070f3 0%, #0051cc 100%);
+  color: white;
   font-size: 28px;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-  z-index: 100;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 112, 243, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 10000;
+}
+
+.fam-primary:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 112, 243, 0.6);
+}
+
+.fam-primary:active {
+  transform: scale(0.95);
+}
+
+.fam-primary.active {
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+.fam-icon-plus {
+  transition: transform 0.3s ease;
+}
+
+.fam-menu {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transform: scale(0.3) translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fam-menu.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+.fam-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 50px;
   text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+
+.fam-item:hover {
+  transform: translateX(-8px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fam-item:active {
+  transform: translateX(-4px);
+}
+
+.fam-item-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fam-item-label {
+  letter-spacing: 0.3px;
+}
+
+.whatsapp-item {
+  animation-delay: 0.05s;
+}
+
+.call-item {
+  animation-delay: 0.1s;
+}
+
+.fam-menu.active .fam-item {
+  animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.fam-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9998;
+}
+
+.fam-overlay.active {
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .fam-container {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .fam-primary {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+  }
+
+  .fam-item {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .fam-item-icon {
+    font-size: 18px;
+  }
 }
 </style>
+
+<script>
+// Floating Action Menu Toggle Logic
+const famPrimary = document.getElementById('famPrimary');
+const famMenu = document.getElementById('famMenu');
+const famOverlay = document.getElementById('famOverlay');
+
+function toggleMenu() {
+  const isActive = famPrimary.classList.toggle('active');
+  famMenu.classList.toggle('active', isActive);
+  famOverlay.classList.toggle('active', isActive);
+}
+
+function closeMenu() {
+  famPrimary.classList.remove('active');
+  famMenu.classList.remove('active');
+  famOverlay.classList.remove('active');
+}
+
+famPrimary.addEventListener('click', toggleMenu);
+famOverlay.addEventListener('click', closeMenu);
+
+// Close menu when a menu item is clicked
+document.querySelectorAll('.fam-item').forEach(item => {
+  item.addEventListener('click', closeMenu);
+});
+
+// Close menu on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeMenu();
+  }
+});
+</script>
 <body>
   <div class="container">
     <h1>Welcome to Noor Al Damam Technical Contracting</h1>
